@@ -59,16 +59,16 @@ const Home: React.FC = () => {
             onClick: () => handleMenuClick('/home/users'),
           },
           {
-            key: '3',
-            icon: <CiLogout />,
-            label: 'Log out',
-            onClick: () => handleMenuClick('/'),
-          },
-          {
             key: '4',
             icon: collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />,
             label: collapsed ? 'Expand' : 'Collapse',
             onClick: () => setCollapsed(!collapsed),
+          },
+          {
+            key: '3',
+            icon: <CiLogout />,
+            label: 'Log out',
+            onClick: () => handleMenuClick('/'),
           },
         ]}
       />
