@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Statistic } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { Pie, Column } from '@ant-design/charts';
 import './Dashboard.scss';
 import user from '../../../../public/images/user.svg'

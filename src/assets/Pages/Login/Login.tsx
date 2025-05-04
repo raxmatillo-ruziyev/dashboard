@@ -6,7 +6,7 @@ import logo from '../../../../public/images/logo.svg';
 
 const Login: React.FC = () => {
   const navigate = useNavigate(); // Navigatsiya qilish uchun hook
-  const [loading, setLoading] = useState(false);
+  const [loading, _] = useState(false);
 
   const onFinish = (values: any) => {
     console.log('Success:', values);

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
