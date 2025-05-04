@@ -1,0 +1,20 @@
+.users-container {
+    padding: 10px;
+  
+    .ant-table {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  
+    .ant-btn {
+      color: #595959;
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  
+    .ant-btn-dangerous {
+      color: #ff4d4f;
+    }
+  }
+  
