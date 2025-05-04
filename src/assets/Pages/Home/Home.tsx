@@ -3,14 +3,14 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import {  Layout, Menu, theme } from 'antd';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { FaUsers } from 'react-icons/fa';
 import { ImStatsBars } from 'react-icons/im';
 import { CiLogout } from 'react-icons/ci';
 
 
-const { Header, Sider, Content } = Layout;
+const {  Sider, Content } = Layout;
 
 const Home: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
