@@ -68,8 +68,12 @@ const Home: React.FC = () => {
             key: '3',
             icon: <CiLogout />,
             label: 'Log out',
-            onClick: () => handleMenuClick('/'),
-          },
+            onClick: () => {
+              localStorage.removeItem('user'); // userni localStorage dan o'chirish
+              handleMenuClick('/'); // login sahifasiga o'tish
+            },
+          }
+          
         ]}
       />
     </Sider>

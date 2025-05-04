@@ -9,18 +9,16 @@ const Login: React.FC = () => {
   const [loading, _] = useState(false);
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     const { username, password } = values;
-
-    // Oddiy tekshiruv: username va password mos kelsa
+  
     if (username === 'admin' && password === '1234') {
-      // Agar to‘g‘ri bo‘lsa, Home sahifasiga o‘tish
+      localStorage.setItem('user', JSON.stringify({ username, password }));
       navigate('/home/stats');
     } else {
-      // Noto‘g‘ri bo‘lsa, xatolik chiqarish
       alert('Foydalanuvchi nomi yoki parol noto‘g‘ri');
     }
   };
+  
 
   return (
     <div className='login'>
