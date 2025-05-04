@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     // Oddiy tekshiruv: username va password mos kelsa
     if (username === 'admin' && password === '1234') {
       // Agar to‘g‘ri bo‘lsa, Home sahifasiga o‘tish
-      navigate('/stats');
+      navigate('/home/stats');
     } else {
       // Noto‘g‘ri bo‘lsa, xatolik chiqarish
       alert('Foydalanuvchi nomi yoki parol noto‘g‘ri');
