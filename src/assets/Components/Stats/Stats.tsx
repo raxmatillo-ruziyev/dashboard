@@ -70,10 +70,14 @@ const Stats: React.FC = () => {
 
     return (
         <div className="stats">
-            <Row gutter={[6, 16]}>
+            <h1 className='stats-title'>Statistika</h1>
+            <Row   className='stats-top'
+           >
                 {statisticData.map((item, idx) => (
                     <Col span={4.9} key={idx}>
-                        <Card>
+                        <Card  style={{
+                        border:"1px solid #00000059",
+                    }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                 <div style={{ fontSize: 12, color: '#999' }}>{item.title}</div>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap:"10px" }}>
@@ -95,13 +99,20 @@ const Stats: React.FC = () => {
 
 
             <Row gutter={16} style={{ marginTop: 24 }}>
-                <Col span={12}>
-                    <Card title="Generatsiyalar turi">
+                <Col span={12} 
+                >
+                    <Card 
+                     style={{
+                        border:"1px solid #00000059",
+                    }} title="Generatsiyalar turi">
                         <Pie {...pieConfig} />
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card title="Obuna turi">
+                    <Card
+                     style={{
+                        border:"1px solid #00000059",
+                    }} title="Obuna turi">
                         <Pie {...pieConfig2} />
                     </Card>
                 </Col>
@@ -109,7 +120,11 @@ const Stats: React.FC = () => {
 
             <Row gutter={16} style={{ marginTop: 24 }}>
                 <Col span={24}>
-                    <Card title="Kunlik yangi foydalanuvchilar">
+                    <Card  
+                     style={{
+                        border:"1px solid #00000059",
+                    }}
+                    title="Kunlik yangi foydalanuvchilar">
                         <Column {...columnConfig} />
                     </Card>
                 </Col>
@@ -117,7 +132,11 @@ const Stats: React.FC = () => {
 
             <Row gutter={16} style={{ marginTop: 24 }}>
                 <Col span={24}>
-                    <Card title="Kunlik yangi to‘lovlar">
+                    <Card
+                     style={{
+                        border:"1px solid #00000059",
+                        
+                    }} title="Kunlik yangi to‘lovlar">
                         <Column {...columnConfig} />
                     </Card>
                 </Col>

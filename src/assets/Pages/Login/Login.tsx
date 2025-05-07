@@ -66,6 +66,9 @@ const Login: React.FC = () => {
             </Form.Item>
 
           </Form>
+          <div>
+            <img className='login-img' src={logo} alt="" />
+          </div>
         </div>
       </div>
     </div>

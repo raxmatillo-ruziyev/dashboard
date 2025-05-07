@@ -4,14 +4,15 @@
   padding: 0;
 }
 
+
 .login-subtitle {
   font-size: 24px;
   font-family: 'Noto Sans', sans-serif;
 }
 
 .login-logo {
-  width: 60px;
-  height: 60px;
+  width: 62px;
+  height: 64px;
 }
 
 .login-inner {
@@ -24,17 +25,16 @@
 .login-wrap {
   margin: auto;
   background-color: #11093B;
-  max-width: 1280px;
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
-  // border-radius: 10px;
-
+  overflow: hidden; // SHU YERGA QO‘SHING
 }
 
+
 .login-form {
-  max-width: 370px;
+  max-width: 400px;
   margin: 0 auto;
   padding-top: 70px;
 
@@ -42,8 +42,8 @@
 
 .login-box {
   background: #FFFFFF;
-  max-width: 1100px;
   margin-left: 50px;
+  margin-right: 200px;
   width: 100%;
   height: 90vh;
   border-radius: 10px;
@@ -56,18 +56,18 @@
 .login-title {
   text-align: center;
   color: #495057;
-  font-size: 29px;
-  line-height: 30px;
-  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
 }
 
 .login-text {
   text-align: center;
   color: #495057;
-  font-size: 19px;
-  line-height: 25px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 400;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .login-button {
@@ -85,13 +85,13 @@
 
 }
 .login-img{
-  border: 1px solid red;
+  // border: 1px solid red;
 opacity: 70%;
  position: absolute;
  transform: rotate(45deg);
- right: -120px;
+left: 780px;
  z-index: 99999999999;
- top: 270px;
+ top: 360px;
  width: 600px;
  -webkit-transform: rotate(45deg);
  -moz-transform: rotate(45deg);
