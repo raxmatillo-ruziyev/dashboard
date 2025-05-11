@@ -1,5 +1,7 @@
 .stats {
- 
+ .ant-card-body{
+  padding:  18px 10px;
+ }
   
     .ant-card {
       border-radius: 12px;
@@ -22,12 +24,16 @@
     }
   }
   .stats-title{
-    font-size: -18px;
+    font-size: 18px;
     line-height: 21px;
     padding: 20px 0;
   }
  .stats-top{
   display: flex;
-  justify-content: center;
-  gap:20px;
+  justify-content: space-between;
+
+ }
+ .stats-top-card{
+  width: 18%;
+  height: auto;
  }

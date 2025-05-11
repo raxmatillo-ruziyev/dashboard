@@ -12,7 +12,7 @@ import stats from '../../../../public/images/stats.svg'
 import users from '../../../../public/images/users.svg'
 import pay from '../../../../public/images/payhistory.svg'
 
-const {  Sider, Content, Footer } = Layout;
+const {  Sider, Content } = Layout;
 
 const Home: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
         collapsible
         collapsed={collapsed}
         style={{
-          padding:"0px 5px ",
+          padding:"0px 6px ",
           position: 'fixed',
           height: '100vh',
           left: 0,
@@ -70,13 +70,20 @@ const Home: React.FC = () => {
         <Menu
           theme="dark"
           mode="inline"
-          style={{ borderBottom: '1px solid white' }}
+          style={{ borderBottom: '1px solid white',
+            padding:"3px "
+           }}
           items={[
             {
               key: '1',
-              icon: <img src={logo} alt="Ghibli Icon" style={{ width: 20, height: 20 }} />,
-              label: <Link to={'/home/stats'}>Ghibli Bot</Link>,
-              onClick: () => handleMenuClick('/home'),
+              icon: <img src={logo} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
+              label: <Link to={'/home/stats'} 
+              style={{
+                fontSize:"20px",
+                fontWeight:"600",
+                color:"white"
+              }}>Ghibli Bot</Link>,
+            
             },
           ]}
         />
@@ -127,9 +134,6 @@ const Home: React.FC = () => {
         >
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          © {new Date().getFullYear()} MChJ "BUXORA NATURAL PRODUCT". Barcha huquqlar himoyalangan.
-        </Footer>
       </Layout>
     </Layout>
   );

@@ -66,7 +66,7 @@ const Login: React.FC = () => {
             </Form.Item>
 
           </Form>
-          <div>
+          <div className='login-next-box'>
             <img className='login-img' src={logo} alt="" />
           </div>
         </div>

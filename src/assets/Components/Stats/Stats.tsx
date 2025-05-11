@@ -74,11 +74,12 @@ const Stats: React.FC = () => {
             <Row   className='stats-top'
            >
                 {statisticData.map((item, idx) => (
-                    <Col span={4.9} key={idx}>
+                    <Col className='stats-top-card' key={idx}>
                         <Card  style={{
                         border:"1px solid #00000059",
+    
                     }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 1}}>
                                 <div style={{ fontSize: 12, color: '#999' }}>{item.title}</div>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap:"10px" }}>
                                     <div style={{ fontSize: 19, fontWeight: 600 }}>{item.value}</div>
