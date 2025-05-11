@@ -12,7 +12,7 @@ import stats from '../../../../public/images/stats.svg'
 import users from '../../../../public/images/users.svg'
 import pay from '../../../../public/images/payhistory.svg'
 
-const {  Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const Home: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -29,19 +29,19 @@ const Home: React.FC = () => {
   const menuItems = [
     {
       key: '2',
-      icon: <img src={stats} alt="Ghibli Icon" style={{ width: 20, height: 20 }} />,
+      icon: <img src={stats} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
       label: <Link to={'/home/stats'}>Statistikalar</Link>,
       onClick: () => handleMenuClick('/home/stats'),
     },
     {
       key: '3',
-      icon: <img src={users} alt="Ghibli Icon" style={{ width: 20, height: 20 }} />,
+      icon: <img src={users} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
       label: <Link to={'/home/users'}>Foydalanuvchilar</Link>,
       onClick: () => handleMenuClick('/home/users'),
     },
     {
       key: '6',
-      icon: <img src={pay} alt="Ghibli Icon" style={{ width: 20, height: 20 }} />,
+      icon: <img src={pay} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
       label: <Link to={'/home/users'}>To'lov tarixi</Link>,
       onClick: () => handleMenuClick('/home/users'),
     },
@@ -54,7 +54,7 @@ const Home: React.FC = () => {
         collapsible
         collapsed={collapsed}
         style={{
-          padding:"0px 6px ",
+          padding: "0px  ",
           position: 'fixed',
           height: '100vh',
           left: 0,
@@ -70,23 +70,39 @@ const Home: React.FC = () => {
         <Menu
           theme="dark"
           mode="inline"
-          style={{ borderBottom: '1px solid white',
-            padding:"3px "
-           }}
+          style={{ padding: "3px" }}
           items={[
             {
-              key: '1',
+              key: 'title',
+              disabled: true,
               icon: <img src={logo} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
-              label: <Link to={'/home/stats'} 
-              style={{
-                fontSize:"20px",
-                fontWeight:"600",
-                color:"white"
-              }}>Ghibli Bot</Link>,
-            
+              label: (
+                <span style={{
+                  fontSize: "20px",
+                  fontWeight: "600",
+                  color: "white",
+                  cursor: "pointer"
+                }}>
+                  Ghibli Bot
+                </span>
+              ),
             },
           ]}
         />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingLeft: "20px"
+          }}>
+          <hr
+            style={{
+              borderRadius: "20px",
+              width: "160px"
+            }} />
+
+        </div>
 
         {/* Menu Items */}
         <Menu

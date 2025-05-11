@@ -104,6 +104,10 @@ const Stats: React.FC = () => {
                 >
                     <Card 
                      style={{
+                        borderTopLeftRadius:"10px",
+                        borderTopRightRadius:"0px",
+                        borderBottomLeftRadius:"10px",
+                        borderBottomRightRadius:"0px",
                         border:"1px solid #00000059",
                     }} title="Generatsiyalar turi">
                         <Pie {...pieConfig} />
@@ -112,6 +116,10 @@ const Stats: React.FC = () => {
                 <Col span={12}>
                     <Card
                      style={{
+                        borderTopLeftRadius:"0px",
+                        borderTopRightRadius:"10px",
+                        borderBottomLeftRadius:"0px",
+                        borderBottomRightRadius:"10px",
                         border:"1px solid #00000059",
                     }} title="Obuna turi">
                         <Pie {...pieConfig2} />
@@ -123,6 +131,8 @@ const Stats: React.FC = () => {
                 <Col span={24}>
                     <Card  
                      style={{
+                        borderBottomLeftRadius:"0px",
+                        borderBottomRightRadius:"0px",
                         border:"1px solid #00000059",
                     }}
                     title="Kunlik yangi foydalanuvchilar">
@@ -135,6 +145,8 @@ const Stats: React.FC = () => {
                 <Col span={24}>
                     <Card
                      style={{
+                        borderTopLeftRadius:"0px",
+                        borderTopRightRadius:"0px",
                         border:"1px solid #00000059",
                         
                     }} title="Kunlik yangi to‘lovlar">
