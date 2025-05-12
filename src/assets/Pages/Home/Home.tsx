@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import  { useState } from 'react';
 import { Layout, Menu, theme } from 'antd';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './Home.scss';
