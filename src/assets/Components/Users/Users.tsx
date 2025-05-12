@@ -182,7 +182,7 @@ const Users: React.FC = () => {
         dataSource={users}
         columns={columns}
         loading={loading}
-        pagination={{ pageSize: 5 }}
+        pagination={{ pageSize: 10 }}
         bordered
       />
 

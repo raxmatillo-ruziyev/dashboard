@@ -23,6 +23,7 @@
 }
 
 .login-wrap {
+  position: relative;
   overflow: hidden;
   margin: auto;
   background-color: #11093B;
@@ -80,17 +81,18 @@
 
 
 .login-next-box {
-  position: relative;
+  position: absolute;
+  left: 780px;
+  z-index: 99999999999;
+  top: 350px;
 
 
 }
 .login-img{
 opacity: 100%;
- position: absolute;
+
  transform: rotate(45deg);
-left: 780px;
- z-index: 99999999999;
- top: -150px;
+
  width: 600px;
  -webkit-transform: rotate(45deg);
  -moz-transform: rotate(45deg);
