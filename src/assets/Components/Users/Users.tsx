@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Dropdown, Menu, Modal, Form, Input, message } from 'antd';
-
-import {
-  EyeOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  MoreOutlined,
-} from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, DeleteOutlined, MoreOutlined } from '@ant-design/icons';
 import './Users.scss';
-import addbtn from '../../../../public/images/addbtn.svg'
+import addbtn from '../../../../public/images/addbtn.svg';
 
 interface UserType {
   key: number;
@@ -26,10 +20,10 @@ const Users: React.FC = () => {
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState<UserType | null>(null);
-  const [form] = Form.useForm();
   const [viewUserModalVisible, setViewUserModalVisible] = useState(false);
-const [viewingUser, setViewingUser] = useState<UserType | null>(null);
+  const [editingUser, setEditingUser] = useState<UserType | null>(null);
+  const [viewingUser, setViewingUser] = useState<UserType | null>(null);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchUsers();
@@ -40,7 +34,7 @@ const [viewingUser, setViewingUser] = useState<UserType | null>(null);
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((res) => res.json())
       .then((data) => {
-        const formatted = data.map((user: any, index: number) => ({
+        const formatted = data.map((user: any) => ({
           key: user.id,
           name: user.name,
           username: user.username,
@@ -57,42 +51,8 @@ const [viewingUser, setViewingUser] = useState<UserType | null>(null);
 
   const handleMenuClick = (action: string, record: UserType) => {
     if (action === 'view') {
-       setViewingUser(record);
-  setViewUserModalVisible(true);
-  Modal.info({
-    title: 'Foydalanuvchi ma’lumotlari',
-    content: (
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <tbody>
-          <tr>
-            <td style={{border:"1px solid black", padding: '8px', fontWeight: 'bold' }}>Ism:</td>
-            <td style={{border:"1px solid black", padding: '8px' }}>{record.name}</td>
-          </tr>
-          <tr>
-            <td style={{border:"1px solid black", padding: '8px', fontWeight: 'bold' }}>Username:</td>
-            <td style={{border:"1px solid black", padding: '8px' }}>{record.username}</td>
-          </tr>
-          <tr>
-            <td style={{border:"1px solid black", padding: '8px', fontWeight: 'bold' }}>Email:</td>
-            <td style={{border:"1px solid black", padding: '8px' }}>{record.email}</td>
-          </tr>
-          <tr>
-            <td style={{border:"1px solid black", padding: '8px', fontWeight: 'bold' }}>Telefon:</td>
-            <td style={{border:"1px solid black", padding: '8px' }}>{record.phone}</td>
-          </tr>
-          <tr>
-            <td style={{border:"1px solid black", padding: '8px', fontWeight: 'bold' }}>Shahar:</td>
-            <td style={{border:"1px solid black", padding: '8px' }}>{record.address.city}</td>
-          </tr>
-          <tr>
-            <td style={{border:"1px solid black", padding: '8px', fontWeight: 'bold' }}>Websayt:</td>
-            <td style={{border:"1px solid black", padding: '8px' }}>{record.website}</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-  });
-  
+      setViewingUser(record);
+      setViewUserModalVisible(true);
     } else if (action === 'edit') {
       setEditingUser(record);
       form.setFieldsValue({
@@ -109,7 +69,6 @@ const [viewingUser, setViewingUser] = useState<UserType | null>(null);
         title: 'O‘chirishni xohlaysizmi?',
         content: record.name,
         onOk: () => {
-          // DELETE so‘rovi
           fetch(`https://jsonplaceholder.typicode.com/users/${record.key}`, {
             method: 'DELETE',
           })
@@ -141,129 +100,83 @@ const [viewingUser, setViewingUser] = useState<UserType | null>(null);
       };
 
       if (editingUser) {
-        // PUT (Tahrirlash)
+        // PUT
         fetch(`https://jsonplaceholder.typicode.com/users/${editingUser.key}`, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
           .then((res) => res.json())
           .then((data) => {
             message.success('Tahrirlandi');
             setUsers((prev) =>
-              prev.map((user) => (user.key === editingUser.key ? { ...data, key: editingUser.key } : user))
+              prev.map((user) =>
+                user.key === editingUser.key ? { ...data, key: editingUser.key } : user
+              )
             );
             setIsModalOpen(false);
+            form.resetFields();
           });
       } else {
-        // POST (Yangi qo‘shish)
+        // POST
+        const newKey = Math.max(...users.map((u) => u.key), 0) + 1;
         fetch(`https://jsonplaceholder.typicode.com/users`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
           .then((res) => res.json())
           .then((data) => {
             message.success('Qo‘shildi');
-            setUsers((prev) => [...prev, { ...data, key: Date.now() }]);
+            setUsers((prev) => [...prev, { ...data, key: newKey }]);
             setIsModalOpen(false);
+            form.resetFields();
           });
       }
     });
   };
 
   const columns = [
-    {
-      title: '№',
-      dataIndex: 'key',
-      key: 'key',
-    },
-    {
-      title: 'Ismi',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Foydalanuvchi nomi',
-      dataIndex: 'username',
-      key: 'username',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'Telefon',
-      dataIndex: 'phone',
-      key: 'phone',
-    },
-    {
-      title: 'Shahar',
-      dataIndex: ['address', 'city'],
-      key: 'city',
-    },
-    {
-      title: 'Websayt',
-      dataIndex: 'website',
-      key: 'website',
-    },
+    { title: '№', dataIndex: 'key', key: 'key' },
+    { title: 'Ismi', dataIndex: 'name', key: 'name' },
+    { title: 'Foydalanuvchi nomi', dataIndex: 'username', key: 'username' },
+    { title: 'Email', dataIndex: 'email', key: 'email' },
+    { title: 'Telefon', dataIndex: 'phone', key: 'phone' },
+    { title: 'Shahar', dataIndex: ['address', 'city'], key: 'city' },
+    { title: 'Websayt', dataIndex: 'website', key: 'website' },
     {
       title: 'Amallar',
       key: 'actions',
-      render: (_: any, record: UserType) => {
-        const menu = (
-          <Menu
-            onClick={({ key }) => handleMenuClick(key, record)}
-            items={[
-              {
-                key: 'view',
-                label: 'Ko‘rish',
-                icon: <EyeOutlined />,
-              },
-              {
-                key: 'edit',
-                label: 'Tahrirlash',
-                icon: <EditOutlined />,
-              },
-              {
-                key: 'delete',
-                label: 'O‘chirish',
-                icon: <DeleteOutlined />,
-                danger: true,
-              },
-            ]}
-          />
-        );
-        return (
-          <Dropdown overlay={menu} trigger={['click']}>
-            <Button icon={<MoreOutlined />} />
-          </Dropdown>
-        );
-      },
+      render: (_: any, record: UserType) => (
+        <Dropdown
+          overlay={
+            <Menu
+              onClick={({ key }) => handleMenuClick(key, record)}
+              items={[
+                { key: 'view', label: 'Ko‘rish', icon: <EyeOutlined /> },
+                { key: 'edit', label: 'Tahrirlash', icon: <EditOutlined /> },
+                { key: 'delete', label: 'O‘chirish', icon: <DeleteOutlined />, danger: true },
+              ]}
+            />
+          }
+          trigger={['click']}
+        >
+          <Button icon={<MoreOutlined />} />
+        </Dropdown>
+      ),
     },
   ];
 
   return (
     <div className="users-container">
-     <div 
-     style={{
-      display:"flex",
-      justifyContent:"space-between"
-     }}>
-     <h1 className='users-title'>Foydalanuvchilar</h1>
-      <Button
-        onClick={handleAddNew}
-        style={{ marginBottom: 16 ,
-          border:"1px solid orange"
-        }}
-      ><img src={addbtn} alt="" />
-      </Button>
-     </div>
+      <div className="users-header">
+        <h1 className="users-title">Foydalanuvchilar</h1>
+        <Button
+          onClick={handleAddNew}
+          style={{ marginBottom: 16, border: '1px solid orange' }}
+          icon={<img src={addbtn} alt="Qo‘shish" />}
+        />
+      </div>
 
       <Table
         dataSource={users}
@@ -273,10 +186,14 @@ const [viewingUser, setViewingUser] = useState<UserType | null>(null);
         bordered
       />
 
+      {/* Create/Edit Modal */}
       <Modal
         title={editingUser ? 'Foydalanuvchini tahrirlash' : 'Yangi foydalanuvchi'}
         open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => {
+          setIsModalOpen(false);
+          form.resetFields();
+        }}
         onOk={handleSubmit}
         okText={editingUser ? 'Saqlash' : 'Qo‘shish'}
       >
@@ -300,6 +217,27 @@ const [viewingUser, setViewingUser] = useState<UserType | null>(null);
             <Input />
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* View Modal */}
+      <Modal
+        title="Foydalanuvchi ma’lumotlari"
+        open={viewUserModalVisible}
+        onCancel={() => setViewUserModalVisible(false)}
+        footer={null}
+      >
+        {viewingUser && (
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <tbody>
+              <tr><td><b>Ism:</b></td><td>{viewingUser.name}</td></tr>
+              <tr><td><b>Username:</b></td><td>{viewingUser.username}</td></tr>
+              <tr><td><b>Email:</b></td><td>{viewingUser.email}</td></tr>
+              <tr><td><b>Telefon:</b></td><td>{viewingUser.phone}</td></tr>
+              <tr><td><b>Shahar:</b></td><td>{viewingUser.address.city}</td></tr>
+              <tr><td><b>Websayt:</b></td><td>{viewingUser.website}</td></tr>
+            </tbody>
+          </table>
+        )}
       </Modal>
     </div>
   );
