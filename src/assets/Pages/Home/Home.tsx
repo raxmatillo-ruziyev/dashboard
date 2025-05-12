@@ -5,12 +5,13 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { CiLogout } from 'react-icons/ci';
 import './Home.scss';
 import logo from '../../../../public/images/logo.svg';
 import stats from '../../../../public/images/stats.svg'
 import users from '../../../../public/images/users.svg'
 import pay from '../../../../public/images/payhistory.svg'
+import logout from '../../../../public/images/logout.svg'
+import col from '../../../../public/images/collapsed.svg'
 
 const { Sider, Content } = Layout;
 
@@ -106,7 +107,7 @@ const Home: React.FC = () => {
 
         {/* Menu Items */}
         <Menu
-          style={{ height: '70vh' }}
+          style={{ height: '83vh' }}
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
@@ -119,15 +120,10 @@ const Home: React.FC = () => {
           mode="inline"
           style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}
           items={[
-            {
-              key: '4',
-              icon: collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />,
-              label: collapsed ? 'Expand' : 'Collapse',
-              onClick: () => setCollapsed(!collapsed),
-            },
+           
             {
               key: '5',
-              icon: <CiLogout />,
+              icon: <img src={logout} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
               label: 'Log out',
               onClick: () => {
                 localStorage.removeItem('user');
@@ -139,17 +135,47 @@ const Home: React.FC = () => {
       </Sider>
 
       <Layout style={{ marginLeft: collapsed ? 80 : 200, background: "#001529" }}>
-        <Content
+       <div
+       style={{
+        display:"flex"
+       }}>
+        <div 
+        style={{
+          color:"white",
+          width:"30px",
+          padding:"50px 0"
+        }}>
+          <div style={{ padding: '16px', background: '#001529' }}>
+  <span
+    onClick={() => setCollapsed(!collapsed)}
+    style={{
+      fontSize: '30px',
+      color: '#fff',
+      cursor: 'pointer',
+    }}
+  >
+    <img
+      src={collapsed ? col : col}
+      alt="Toggle"
+      style={{ width: 40, height: 50 }}
+    />
+  </span>
+</div>
+
+        </div>
+       <Content
           style={{
             margin: '24px 16px',
             padding: 24,
             minHeight: 280,
+            border:"1px solid #11093B",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
         >
           <Outlet />
         </Content>
+       </div>
       </Layout>
     </Layout>
   );

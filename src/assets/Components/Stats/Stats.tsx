@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col } from 'antd';
-import { Pie, Column } from '@ant-design/charts';
+import { Pie, Column, PieConfig, ColumnConfig } from '@ant-design/charts';
 import './Stats.scss';
 import user from '../../../../public/images/user.svg';
 import user2 from '../../../../public/images/user2.svg';
@@ -44,65 +44,86 @@ const Stats: React.FC = () => {
         { title: 'Bugungi tushum (sum)', value: users.length * 100, img: user5 },
     ];
 
-    const pieData = [
-        { type: 'Ghible 1', value: Math.floor(users.length * 0.2) },
-        { type: 'Ghible 2', value: Math.floor(users.length * 0.3) },
-        { type: 'Ghible 3', value: Math.floor(users.length * 0.25) },
-        { type: 'Ghible 4', value: users.length - Math.floor(users.length * 0.75) },
-    ];
+    const pieConfig: PieConfig = {
+        data: [
+            { type: 'Ghible 1', value: 27 },
+            { type: 'Ghible 2', value: 25 },
+            { type: 'Ghible 3', value: 18 },
+            { type: 'Ghible 4', value: 15 },
+        ],
+        angleField: 'value',
+        colorField: 'type',
+        innerRadius: 0.6,
+        label: {
+            text: 'value',
+            style: {
+                fontWeight: 'bold',
+            },
+        },
+        legend: {
+            color: {
+                title: false,
+                position: 'right',
+                rowPadding: 5,
+            },
+        },
+        annotations: [
+            {
+                type: 'text',
+                style: {
+                    text: 'Generatsiya',
+                    x: '50%',
+                    y: '50%',
+                    textAlign: 'center',
+                    fontSize: 18,
+                    fontStyle: 'bold',
+                },
+            },
+        ],
+    };
 
-    const subData = [
-        { type: 'Free', value: Math.floor(users.length * 0.5) },
-        { type: 'Plus', value: Math.floor(users.length * 0.2) },
-        { type: 'Standart', value: Math.floor(users.length * 0.2) },
-        { type: 'Premium', value: users.length - Math.floor(users.length * 0.9) },
-    ];
+    const pieConfig2: PieConfig = {
+        ...pieConfig,
+        data: [
+            { type: 'Free ', value: 35 },
+            { type: 'Plus ', value: 30 },
+            { type: 'Standart ', value: 20 },
+            { type: 'Premium', value: 15 },
+        ],
+        annotations: [
+            {
+                type: 'text',
+                style: {
+                    text: 'Obunalar',
+                    x: '50%',
+                    y: '50%',
+                    textAlign: 'center',
+                    fontSize: 18,
+                    fontStyle: 'bold',
+                },
+            },
+        ],
+    };
 
     const columnData = Array.from({ length: 7 }).map((_, i) => {
         const day = new Date();
         day.setDate(day.getDate() - i);
         return {
-            month: day.toLocaleDateString('uz-UZ', { day: '2-digit', month: 'short' }).replace('M05', 'May'),
+            month: day.toLocaleDateString('uz-UZ', { day: '2-digit', month: 'short' }),
             value: Math.floor(Math.random() * 100),
         };
     }).reverse();
+
     const columnData2 = Array.from({ length: 7 }).map((_, i) => {
         const day = new Date();
         day.setDate(day.getDate() - i);
         return {
-            month: day.toLocaleDateString('uz-UZ', { day: '2-digit', month: 'short' }).replace('M05', 'May'),
+            month: day.toLocaleDateString('uz-UZ', { day: '2-digit', month: 'short' }),
             value: Math.floor(Math.random() * 100),
         };
     }).reverse();
 
-    const pieConfig = {
-        data: pieData,
-        angleField: 'value',
-        colorField: 'type',
-        radius: 1,
-        innerRadius: 0.6,
-        label: {
-          type: 'inner', // 'spider' emas!
-          offset: '-50%',
-          content: (dataItem: { value: number }) => `${dataItem.value}`,
-          style: {
-            textAlign: 'center',
-            fontSize: 14,
-            fill: '#fff',
-          },
-        },
-        interactions: [{ type: 'element-active' }],
-      };
-      
-
-    const pieConfig2 = {
-  ...pieConfig,
-  data: subData,
-};
-
-      
-
-    const columnConfig = {
+    const columnConfig: ColumnConfig = {
         data: columnData,
         xField: 'month',
         yField: 'value',
@@ -119,21 +140,9 @@ const Stats: React.FC = () => {
         },
     };
 
-    const columnConfig2 = {
+    const columnConfig2: ColumnConfig = {
+        ...columnConfig,
         data: columnData2,
-        xField: 'month',
-        yField: 'value',
-        columnWidthRatio: 0.6,
-        color: '#9254de',
-        label: {
-            position: 'top',
-            style: {
-                fill: '#000',
-                fontSize: 14,
-                fontWeight: 600,
-            },
-            content: (originData: any) => `${originData.value}`,
-        },
     };
 
     if (loading) return <div>Yuklanmoqda...</div>;
@@ -147,7 +156,7 @@ const Stats: React.FC = () => {
                     <Col className='stats-top-card' key={idx}>
                         <Card style={{ border: "1px solid #00000059" }}>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                <div style={{ fontSize: 12, color: '#999' }}>{item.title}</div>
+                                <div style={{ fontSize: 13, color: '#999' }}>{item.title}</div>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: "10px" }}>
                                     <div style={{ fontSize: 19, fontWeight: 600 }}>{item.value}</div>
                                     {item.img && (
@@ -166,12 +175,12 @@ const Stats: React.FC = () => {
 
             <Row gutter={16} style={{ marginTop: 24 }}>
                 <Col span={12}>
-                    <Card style={{ borderRadius: "10px 0 0px 10px", border: "1px solid #00000059" }} title="Generatsiyalar turi">
+                    <Card title="Generatsiyalar turi" style={{ borderRadius: "10px 0 0px 10px", border: "1px solid #00000059" }}>
                         <Pie {...pieConfig} />
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card style={{ borderRadius: "0 10px 10px 0px", border: "1px solid #00000059" }} title="Obuna turi">
+                    <Card title="Obuna turi" style={{ borderRadius: "0 10px 10px 0px", border: "1px solid #00000059" }}>
                         <Pie {...pieConfig2} />
                     </Card>
                 </Col>
@@ -179,7 +188,7 @@ const Stats: React.FC = () => {
 
             <Row gutter={16} style={{ marginTop: 24 }}>
                 <Col span={24}>
-                    <Card style={{ borderBottomLeftRadius: "0", borderBottomRightRadius: "0", border: "1px solid #00000059" }} title="Kunlik yangi foydalanuvchilar">
+                    <Card title="Kunlik yangi foydalanuvchilar" style={{ borderBottomLeftRadius: "0", borderBottomRightRadius: "0", border: "1px solid #00000059" }}>
                         <Column {...columnConfig} />
                     </Card>
                 </Col>
@@ -187,7 +196,7 @@ const Stats: React.FC = () => {
 
             <Row gutter={16} style={{ marginTop: 24 }}>
                 <Col span={24}>
-                    <Card style={{ borderTopLeftRadius: "0", borderTopRightRadius: "0", border: "1px solid #00000059" }} title="Kunlik yangi to‘lovlar">
+                    <Card title="Kunlik yangi to‘lovlar" style={{ borderTopLeftRadius: "0", borderTopRightRadius: "0", border: "1px solid #00000059" }}>
                         <Column {...columnConfig2} />
                     </Card>
                 </Col>
