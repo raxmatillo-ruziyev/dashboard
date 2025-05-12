@@ -166,12 +166,12 @@ const Stats: React.FC = () => {
 
             <Row gutter={16} style={{ marginTop: 24 }}>
                 <Col span={12}>
-                    <Card style={{ borderRadius: "10px 0 10px 0", border: "1px solid #00000059" }} title="Generatsiyalar turi">
+                    <Card style={{ borderRadius: "10px 0 0px 10px", border: "1px solid #00000059" }} title="Generatsiyalar turi">
                         <Pie {...pieConfig} />
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card style={{ borderRadius: "0 10px 0 10px", border: "1px solid #00000059" }} title="Obuna turi">
+                    <Card style={{ borderRadius: "0 10px 10px 0px", border: "1px solid #00000059" }} title="Obuna turi">
                         <Pie {...pieConfig2} />
                     </Card>
                 </Col>
