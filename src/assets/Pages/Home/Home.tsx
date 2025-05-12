@@ -43,7 +43,7 @@ const Home: React.FC = () => {
       key: '6',
       icon: <img src={pay} alt="Ghibli Icon" style={{ width: 23, height: 23 }} />,
       label: <Link to={'/home/users'}>To'lov tarixi</Link>,
-      onClick: () => handleMenuClick('/home/users'),
+      onClick: () => handleMenuClick('/home/pay'),
     },
   ];
 

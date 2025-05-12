@@ -1,9 +1,8 @@
 
-
 const Dashboard = () => {
   return (
     <div>
-      Dashboard
+      Dashoardga hush kelibsiz
     </div>
   )
 }
