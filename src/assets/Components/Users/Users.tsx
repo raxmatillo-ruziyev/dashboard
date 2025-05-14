@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Dropdown, Menu, Modal, Form, Input, message } from 'antd';
-import { EyeOutlined, EditOutlined, DeleteOutlined, MoreOutlined } from '@ant-design/icons';
+import {
+  Table,
+  Button,
+  Dropdown,
+  Menu,
+  Modal,
+  Form,
+  Input,
+  message,
+  Descriptions,
+} from 'antd';
+import {
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  MoreOutlined,
+} from '@ant-design/icons';
 import './Users.scss';
 import addbtn from '../../../../public/images/addbtn.svg';
 
@@ -45,40 +60,48 @@ const Users: React.FC = () => {
         }));
         setUsers(formatted);
       })
-      .catch((err) => console.error('Xatolik:', err))
+      .catch(() => message.error('Maʼlumotlarni yuklashda xatolik!'))
       .finally(() => setLoading(false));
   };
 
   const handleMenuClick = (action: string, record: UserType) => {
-    if (action === 'view') {
-      setViewingUser(record);
-      setViewUserModalVisible(true);
-    } else if (action === 'edit') {
-      setEditingUser(record);
-      form.setFieldsValue({
-        name: record.name,
-        username: record.username,
-        email: record.email,
-        phone: record.phone,
-        city: record.address.city,
-        website: record.website,
-      });
-      setIsModalOpen(true);
-    } else if (action === 'delete') {
-      Modal.confirm({
-        title: 'O‘chirishni xohlaysizmi?',
-        content: record.name,
-        onOk: () => {
-          fetch(`https://jsonplaceholder.typicode.com/users/${record.key}`, {
-            method: 'DELETE',
-          })
-            .then(() => {
-              message.success('O‘chirildi');
-              setUsers((prev) => prev.filter((u) => u.key !== record.key));
+    switch (action) {
+      case 'view':
+        setViewingUser(record);
+        setViewUserModalVisible(true);
+        break;
+      case 'edit':
+        setEditingUser(record);
+        form.setFieldsValue({
+          name: record.name,
+          username: record.username,
+          email: record.email,
+          phone: record.phone,
+          website: record.website,
+          city: record.address.city,
+        });
+        setIsModalOpen(true);
+        break;
+      case 'delete':
+        Modal.confirm({
+          title: 'Haqiqatan o‘chirmoqchimisiz?',
+          content: record.name,
+          okText: 'Ha',
+          cancelText: 'Yo‘q',
+          onOk: () => {
+            fetch(`https://jsonplaceholder.typicode.com/users/${record.key}`, {
+              method: 'DELETE',
             })
-            .catch(() => message.error('Xatolik yuz berdi'));
-        },
-      });
+              .then(() => {
+                message.success('Foydalanuvchi o‘chirildi');
+                setUsers((prev) =>
+                  prev.filter((user) => user.key !== record.key)
+                );
+              })
+              .catch(() => message.error('O‘chirishda xatolik yuz berdi'));
+          },
+        });
+        break;
     }
   };
 
@@ -100,7 +123,7 @@ const Users: React.FC = () => {
       };
 
       if (editingUser) {
-        // PUT
+        // Edit user
         fetch(`https://jsonplaceholder.typicode.com/users/${editingUser.key}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -108,7 +131,7 @@ const Users: React.FC = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            message.success('Tahrirlandi');
+            message.success('Foydalanuvchi tahrirlandi');
             setUsers((prev) =>
               prev.map((user) =>
                 user.key === editingUser.key ? { ...data, key: editingUser.key } : user
@@ -116,22 +139,24 @@ const Users: React.FC = () => {
             );
             setIsModalOpen(false);
             form.resetFields();
-          });
+          })
+          .catch(() => message.error('Tahrirlashda xatolik'));
       } else {
-        // POST
+        // Add user
         const newKey = Math.max(...users.map((u) => u.key), 0) + 1;
-        fetch(`https://jsonplaceholder.typicode.com/users`, {
+        fetch('https://jsonplaceholder.typicode.com/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         })
           .then((res) => res.json())
           .then((data) => {
-            message.success('Qo‘shildi');
+            message.success('Yangi foydalanuvchi qo‘shildi');
             setUsers((prev) => [...prev, { ...data, key: newKey }]);
             setIsModalOpen(false);
             form.resetFields();
-          });
+          })
+          .catch(() => message.error('Qo‘shishda xatolik'));
       }
     });
   };
@@ -149,17 +174,22 @@ const Users: React.FC = () => {
       key: 'actions',
       render: (_: any, record: UserType) => (
         <Dropdown
+          trigger={['click']}
           overlay={
             <Menu
               onClick={({ key }) => handleMenuClick(key, record)}
               items={[
                 { key: 'view', label: 'Ko‘rish', icon: <EyeOutlined /> },
                 { key: 'edit', label: 'Tahrirlash', icon: <EditOutlined /> },
-                { key: 'delete', label: 'O‘chirish', icon: <DeleteOutlined />, danger: true },
+                {
+                  key: 'delete',
+                  label: 'O‘chirish',
+                  icon: <DeleteOutlined />,
+                  danger: true,
+                },
               ]}
             />
           }
-          trigger={['click']}
         >
           <Button icon={<MoreOutlined />} />
         </Dropdown>
@@ -173,8 +203,8 @@ const Users: React.FC = () => {
         <h1 className="users-title">Foydalanuvchilar</h1>
         <Button
           onClick={handleAddNew}
-          style={{ marginBottom: 16, border: '1px solid orange' }}
           icon={<img src={addbtn} alt="Qo‘shish" />}
+          style={{ marginBottom: 16, border: '1px solid orange' }}
         />
       </div>
 
@@ -186,7 +216,7 @@ const Users: React.FC = () => {
         bordered
       />
 
-      {/* Create/Edit Modal */}
+      {/* Add/Edit Modal */}
       <Modal
         title={editingUser ? 'Foydalanuvchini tahrirlash' : 'Yangi foydalanuvchi'}
         open={isModalOpen}
@@ -204,7 +234,7 @@ const Users: React.FC = () => {
           <Form.Item name="username" label="Username" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+          <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
             <Input />
           </Form.Item>
           <Form.Item name="phone" label="Telefon" rules={[{ required: true }]}>
@@ -227,16 +257,14 @@ const Users: React.FC = () => {
         footer={null}
       >
         {viewingUser && (
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <tbody>
-              <tr><td><b>Ism:</b></td><td>{viewingUser.name}</td></tr>
-              <tr><td><b>Username:</b></td><td>{viewingUser.username}</td></tr>
-              <tr><td><b>Email:</b></td><td>{viewingUser.email}</td></tr>
-              <tr><td><b>Telefon:</b></td><td>{viewingUser.phone}</td></tr>
-              <tr><td><b>Shahar:</b></td><td>{viewingUser.address.city}</td></tr>
-              <tr><td><b>Websayt:</b></td><td>{viewingUser.website}</td></tr>
-            </tbody>
-          </table>
+          <Descriptions bordered column={1}>
+            <Descriptions.Item label="Ismi">{viewingUser.name}</Descriptions.Item>
+            <Descriptions.Item label="Username">{viewingUser.username}</Descriptions.Item>
+            <Descriptions.Item label="Email">{viewingUser.email}</Descriptions.Item>
+            <Descriptions.Item label="Telefon">{viewingUser.phone}</Descriptions.Item>
+            <Descriptions.Item label="Shahar">{viewingUser.address.city}</Descriptions.Item>
+            <Descriptions.Item label="Websayt">{viewingUser.website}</Descriptions.Item>
+          </Descriptions>
         )}
       </Modal>
     </div>

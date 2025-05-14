@@ -1,10 +1,14 @@
 .users-container {
-    padding: 10px;
+    // padding: 10px;
   
     .ant-table {
       border-radius: 8px;
       overflow: hidden;
+      .ant-table-cell{
+        padding: 16px 14px;
+      }
     }
+   
   
     .ant-btn {
       color: #595959;
@@ -17,6 +21,7 @@
       color: #ff4d4f;
     }
   }
+
   .users-title{
     font-size: 18px;
     line-height: 21px;
